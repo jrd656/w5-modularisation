@@ -3,18 +3,13 @@ const fs = require('fs');
 const path = require('path');
 const repos = require('./repos.json');
 
-var sendError = function (err) {
-    res.writeHead(500, { 'content-type': 'text/plain' });
-    res.end('server error');
-}
-
 var endPoints = {
-    '/': 'fac.html',
-    '/fac': 'fac.html',
-    '/dwyl': 'dwyl.html',
-    '/css/stylesheet.css': 'stylesheet.css',
+    '/': '/../public/fac.html',
+    '/fac': '/../public/fac.html',
+    '/dwyl': '/../public/dwyl.html',
+    '/css/stylesheet.css': '/../public/stylesheet.css',
     '/js/request.js': 'request.js',
-    '/js/index.js': 'index.js',
+    '/js/index.js': '/../index.js',
 }
 var contentTypes = {
     '/': 'text/html',
@@ -37,7 +32,10 @@ var handler = (req, res) => {
 
     if (Object.keys(endPoints).indexOf(url) > -1) {
         fs.readFile(path.join(__dirname, endPoints[url]), 'utf8', (err, file) => {
-            if (err) sendError(err);
+            if (err) {
+                res.writeHead(500, { 'content-type': 'text/plain' });
+                res.end('server error');
+            }
             else {
                 res.writeHead(200, { 'content-type': contentTypes[url] });
                 res.end(file);

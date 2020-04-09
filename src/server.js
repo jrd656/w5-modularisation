@@ -1,3 +1,6 @@
+//can someone talk me through what index.js and request.js code is doing?
+
+
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
