@@ -4,12 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "tape test.js"
+    "test": "node test.js | tap-spec",
+    "nyc": "nyc npm test",
+    "coverage": "nyc --report=lcov --reporter=text npm test"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "tape": "^4.6.3"
+    "nyc": "^15.0.1",
+    "tape": "^4.13.2"
+  },
+  "dependencies": {
+    "tap": "^14.10.7",
+    "tap-spec": "^5.0.0"
   }
 }

@@ -6,6 +6,8 @@
   }
 
   function renderRepos(repos) {
+    console.log("repos: ", repos)
+    console.log("view: ", view)
     var view_capitalised = view.toUpperCase();
     var other_view = view === 'fac' ? 'dwyl' : 'fac';
     var other_view_capitalised = other_view.toUpperCase();
