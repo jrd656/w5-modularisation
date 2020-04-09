@@ -28,6 +28,11 @@ var contentTypes = {
   '/js/index.js': 'text/javascript',
 }
 
+var jsonTypes = {
+  '/api/repos/fac': 'fac',
+  '/api/repos/dwyl': 'dwyl'
+}
+
 const handler = (req, res) => {
   const url = req.url;
 
@@ -42,14 +47,11 @@ const handler = (req, res) => {
       }
     })
   }
-
-  else if (url === '/api/repos/fac') {
+  else if(Object.keys(jsonTypes).indexOf(url) > -1){
     res.writeHead(200, { 'content-type': 'application/json' });
-    res.end(JSON.stringify(repos.fac));
-  } else if (url === '/api/repos/dwyl') {
-    res.writeHead(200, { 'content-type': 'application/json' });
-    res.end(JSON.stringify(repos.dwyl));
-  } else {
+    res.end(JSON.stringify(repos[jsonTypes[url]]));
+  }
+  else {
     res.writeHead(404, { 'content-type': 'text/plain' });
     res.end('404 server error');
   }
