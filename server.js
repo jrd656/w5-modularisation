@@ -14,7 +14,18 @@ var sendError = function (err) {
 var endPoints = {
   '/': 'fac.html',
   '/fac': 'fac.html',
-  '/dwyl': 'dwyl.html'
+  '/dwyl': 'dwyl.html',
+  '/css/stylesheet.css': 'stylesheet.css',
+  '/js/request.js': 'request.js',
+  '/js/index.js': 'index.js',
+}
+var contentTypes = {
+  '/': 'text/html',
+  '/fac': 'text/html',
+  '/dwyl': 'text/html',
+  '/css/stylesheet.css': 'text/css',
+  '/js/request.js': 'text/javascript',
+  '/js/index.js': 'text/javascript',
 }
 
 const handler = (req, res) => {
@@ -24,70 +35,15 @@ const handler = (req, res) => {
 
   if (Object.keys(endPoints).indexOf(url) > -1) {
     fs.readFile(path.join(__dirname, endPoints[url]), 'utf8', (err, file) => {
-      if(err) sendError(err);
+      if (err) sendError(err);
       else {
-        res.writeHead(200, { 'content-type': 'text/html' });
+        res.writeHead(200, { 'content-type': contentTypes[url] });
         res.end(file);
       }
     })
   }
 
-  // if (url === '/') {
-  //   fs.readFile(path.join(__dirname, 'fac.html'), 'utf8', (err, file) => {
-  //     /* istanbul ignore if */
-  //     if (err) sendError(err);
-  //     else {
-  //       res.writeHead(200, { 'content-type': 'text/html' });
-  //       res.end(file);
-  //     }
-  //   });
-  // } else if (url === '/fac') {
-  //   fs.readFile(path.join(__dirname, 'fac.html'), 'utf8', (err, file) => {
-  //     /* istanbul ignore if */
-  //     if (err) sendError(err);
-  //     else {
-  //       res.writeHead(200, { 'content-type': 'text/html' });
-  //       res.end(file);
-  //     }
-  //   });
-  // } else if (url === '/dwyl') {
-  //   fs.readFile(path.join(__dirname, 'dwyl.html'), 'utf8', (err, file) => {
-  //     /* istanbul ignore if */
-  //     if (err) sendError(err);
-  //     else {
-  //       res.writeHead(200, { 'content-type': 'text/html' });
-  //       res.end(file);
-  //     }
-  //   });
-  // } 
-  else if (url === '/css/stylesheet.css') {
-    fs.readFile(path.join(__dirname, 'stylesheet.css'), 'utf8', (err, file) => {
-      /* istanbul ignore if */
-      if (err) sendError(err);
-      else {
-        res.writeHead(200, { 'content-type': 'text/css' });
-        res.end(file);
-      }
-    });
-  } else if (url === '/js/request.js') {
-    fs.readFile(path.join(__dirname, 'request.js'), 'utf8', (err, file) => {
-      /* istanbul ignore if */
-      if (err) sendError(err);
-      else {
-        res.writeHead(200, { 'content-type': 'text/javascript' });
-        res.end(file);
-      }
-    });
-  } else if (url === '/js/index.js') {
-    fs.readFile(path.join(__dirname, 'index.js'), 'utf8', (err, file) => {
-      /* istanbul ignore if */
-      if (err) sendError(err);
-      else {
-        res.writeHead(200, { 'content-type': 'text/javascript' });
-        res.end(file);
-      }
-    });
-  } else if (url === '/api/repos/fac') {
+  else if (url === '/api/repos/fac') {
     res.writeHead(200, { 'content-type': 'application/json' });
     res.end(JSON.stringify(repos.fac));
   } else if (url === '/api/repos/dwyl') {
